@@ -142,16 +142,27 @@
 </body>
 <script>
 $('document').ready(function(){
+	var t
 	$('.nav-menu').on('click', 'a', function(e){
 		e.preventDefault();
+		t = document.body.scrollTop;
 		$('body').toggleClass('showMenu')
 		$('.perspective').addClass('delay')
+		$('.absolute').css('top',- t)
+		console.log(t)
 	})
-	$('.block, .main-menu').click(function(e){
+	$('.block').click(function(e){
 		e.preventDefault();
 		$('body').removeClass('showMenu')
-		$('.perspective').delay(250).removeClass('delay')
-	})
+		//$('.perspective').delay(250).removeClass('delay')
+		setTimeout(
+			function() {
+				$('.perspective').removeClass('delay')
+				$('.absolute').css('top', 0)
+				$('body').scrollTop(t)
+			}, 251)
+		})
+
 });
 </script>
 </html>
