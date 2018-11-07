@@ -14,7 +14,7 @@ class Api
     {
         $this->config = Base::getConfig();
         $this->fullUrlToAssets = Base::getBaseUri() . '/2018/assets';
-        $this->redis = (new RedisFactory())->create();
+        //$this->redis = (new RedisFactory())->create();
     }
 
     public function getSchedule()
@@ -90,11 +90,11 @@ class Api
 
     public function getSponsor()
     {
-        $redis_key = Base::getRedisKey('sponsor');
+        /*$redis_key = Base::getRedisKey('sponsor');
         $redis_data = $this->redis->get($redis_key);
         if ($redis_data) {
             return $redis_data;
-        }
+        }*/
         $apiData = new GoogleDocsSpreadsheet(
             MopConResource::getSourceInfo()['googleSheet']['sponsor']['sheetKey'],
             MopConResource::getSourceInfo()['googleSheet']['sponsor']['columns'],
@@ -111,7 +111,7 @@ class Api
         $apiData = ['payload' => $apiDataArray];
 
         $apiData_json = json_encode($apiData);
-        $this->redis->setex($redis_key, 600, $apiData_json);
+        //$this->redis->setex($redis_key, 600, $apiData_json);
 
         return $apiData_json;
     }
