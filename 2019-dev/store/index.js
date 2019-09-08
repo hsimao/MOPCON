@@ -62,6 +62,7 @@ export const state = () => ({
   sessionData: [],
   sessionDetail: null,
   sessionDetailLoading: false,
+  speaker: null,
   tags: [],
 });
 
@@ -79,6 +80,9 @@ export const mutations = {
   },
   clearSessionDetail(state) {
     state.sessionDetail = null;
+  },
+  setSpeaker(state, payload) {
+    state.speaker = payload;
   },
   toggleSessionDetailLoading(state, payload) {
     state.sessionDetailLoading = payload;
@@ -122,6 +126,21 @@ export const actions = {
       }
     });
   },
+  async getSpeaker({ commit }, id) {
+    console.log('id', id);
+    await this.$axios
+      .$get(`${process.env.BASE_URL}/api/2019/speaker/${id}`)
+      .then(res => {
+        console.log('成功', res);
+      })
+      .catch(err => {
+        console.log('失敗');
+        console.dir(err);
+      });
+
+    // commit('setSpeaker', res.data);
+    // console.log('res,', res);
+  },
   async getTags({ commit }) {
     try {
       const { status, data } = await this.$axios.get('/api/2019/speaker/tags');
@@ -140,6 +159,7 @@ export const getters = {
   sessionData: state => state.sessionData,
   sessionDetail: state => state.sessionDetail,
   sessionDetailLoading: state => state.sessionDetailLoading,
+  speaker: state => state.speaker,
   seoLangTag: state => state.seoLangTag,
   localeApiPrefix: state => state.localeApiPrefix,
   pageIsLoading: state => state.pageIsLoading,

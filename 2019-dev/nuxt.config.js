@@ -171,6 +171,8 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
+    credentials: false,
+    proxyHeaders: false,
     baseURL: `${process.env.PROXY_URL}${process.env.BASE_URL}`,
   },
 
